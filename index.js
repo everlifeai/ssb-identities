@@ -44,6 +44,13 @@ exports.init = function (sbot, config) {
     list: function (cb) {
       cb(null, [sbot.id].concat(keys.map(function (e) { return e.id })))
     },
+    secret: function (id, cb) {
+      var _keys = sbot.id === id ? sbot.keys : keys.find(function (e) {
+        return id === e.id
+      })
+      if(!_keys) return cb(new Error('must provide id of listed identities'))
+      else cb(null, _keys)
+    },
     create: function (cb) {
       var filename = 'secret_'+leftpad(keys.length, 2, '0')+'.butt'
       var newKeys = ssbKeys.createSync(path.join(dir, filename))

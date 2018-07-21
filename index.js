@@ -55,14 +55,7 @@ exports.init = function (sbot, config) {
       var filename = 'secret_'+leftpad(keys.length, 2, '0')+'.butt'
       var newKeys = ssbKeys.createSync(path.join(dir, filename))
       keys.push(newKeys)
-      sbot.publish({
-        type: 'contact',
-        following: true,
-        autofollow: true,
-        contact: newKeys.id,
-      }, function(err, msg) {
-        cb(err, newKeys.id)
-      })
+      cb(null, newKeys.id);
     },
     publishAs: function (opts, cb) {
       var id = opts.id
